@@ -1,0 +1,60 @@
+{
+  "name": "euro-dollar-converter",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^6.1.5",
+    "@mui/material": "^6.1.5",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.114",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
+    "decimal.js": "^10.4.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:cucumber": "cross-env TS_NODE_PROJECT='e2e/tsconfig.json' cucumber-js",
+    "eject": "react-scripts eject",
+    "postinstall": "npx playwright install"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.1",
+    "@playwright/test": "^1.48.1",
+    "@types/cucumber": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2"
+  }
+}
