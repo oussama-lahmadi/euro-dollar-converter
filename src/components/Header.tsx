@@ -1,11 +1,12 @@
 import React from 'react';
 import {AppBar, Toolbar, Typography, Select, MenuItem} from '@mui/material';
+import type {SelectChangeEvent} from '@mui/material/Select';
 import {useTranslation} from 'react-i18next';
 
 const Header = () => {
   const { t, i18n } = useTranslation();
 
-  const handleLanguageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleLanguageChange = (event: SelectChangeEvent<string>) => {
     i18n.changeLanguage(event.target.value as string);
   };
 
