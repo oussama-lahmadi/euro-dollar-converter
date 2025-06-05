@@ -1,0 +1,17 @@
+{
+  "appName": "Convertisseur Euro Dollar",
+  "language": "Langue",
+  "amount": "Montant",
+  "enterAmount": "Entrez le montant",
+  "result": "Résultat",
+  "from": "De",
+  "to": "À",
+  "currentRate": "Taux actuel :",
+  "setFixedRate": "Définir le taux fixe",
+  "fixedRateDisabled": "Taux fixe désactivé : dépassement de {{limit}}%",
+  "currentRateHeader": "Taux Courant",
+  "realRate": "Taux Réel",
+  "amountHeader": "Montant",
+  "resultHeader": "Résultat",
+  "pageTitle": "Convertisseur Euro vers Dollar"
+}

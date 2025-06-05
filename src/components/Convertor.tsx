@@ -5,6 +5,7 @@ import {
     IconButton,
     TextField
 } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 
 import {SwapHoriz} from "@mui/icons-material";
 import {GLOBAL_CONF} from "../config/globalConf";
@@ -25,6 +26,7 @@ export interface ConversionResult {
 }
 
 const Convertor = ({rate, onConversion }: ConvertorProps) => {
+    const { t } = useTranslation();
     const [amount, setAmount] = useState<number>(0);
     const [fromCurrency, setFromCurrency] = useState<Currency>(GLOBAL_CONF.CURRENCIES.EUR as Currency);
     const [toCurrency, setToCurrency] = useState< Currency>(GLOBAL_CONF.CURRENCIES.USD as Currency);
@@ -65,23 +67,23 @@ const Convertor = ({rate, onConversion }: ConvertorProps) => {
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
             <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
                 <TextField
-                    label="Amount"
+                    label={t('amount')}
                     value={amount}
                     type={"number"}
                     onChange={handleInputChange}
                     variant="outlined"
-                    placeholder="Enter the amount"
+                    placeholder={t('enterAmount')}
                 />
             </FormControl>
 
-            <CurrencySelector currency={fromCurrency} label={'From'} />
+            <CurrencySelector currency={fromCurrency} label={t('from')} />
             <IconButton color="primary" sx={{ m: 1 }} onClick={handleSwapCurrencies}>
                 <SwapHoriz />
             </IconButton>
 
             <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
                 <TextField
-                    label="Result"
+                    label={t('result')}
                     value={resultAmount.toFixed(2)}
                     type={"number"}
                     disabled
@@ -90,7 +92,7 @@ const Convertor = ({rate, onConversion }: ConvertorProps) => {
                 />
             </FormControl>
 
-            <CurrencySelector currency={toCurrency} label={'To'} />
+            <CurrencySelector currency={toCurrency} label={t('to')} />
 
         </Box>
     );

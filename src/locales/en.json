@@ -1,0 +1,17 @@
+{
+  "appName": "Euro Dollar Converter",
+  "language": "Language",
+  "amount": "Amount",
+  "enterAmount": "Enter the amount",
+  "result": "Result",
+  "from": "From",
+  "to": "To",
+  "currentRate": "Current rate:",
+  "setFixedRate": "Set Fixed Exchange Rate",
+  "fixedRateDisabled": "Fixed rate disabled: {{limit}}% deviation exceeded",
+  "currentRateHeader": "Current Rate",
+  "realRate": "Real Rate",
+  "amountHeader": "Amount",
+  "resultHeader": "Result",
+  "pageTitle": "Euro to Dollar Converter"
+}

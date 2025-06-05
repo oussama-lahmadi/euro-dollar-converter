@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface ConversionRecord {
     from: string;
@@ -15,16 +16,17 @@ interface HistoryTableProps {
 }
 
 const HistoryTable = ({ history }: HistoryTableProps) => {
+    const { t } = useTranslation();
     return (
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell>From</TableCell>
-                    <TableCell>To</TableCell>
-                    <TableCell>Current Rate</TableCell>
-                    <TableCell>Real Rate</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Result</TableCell>
+                    <TableCell>{t('from')}</TableCell>
+                    <TableCell>{t('to')}</TableCell>
+                    <TableCell>{t('currentRateHeader')}</TableCell>
+                    <TableCell>{t('realRate')}</TableCell>
+                    <TableCell>{t('amountHeader')}</TableCell>
+                    <TableCell>{t('resultHeader')}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

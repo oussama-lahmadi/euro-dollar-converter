@@ -3,6 +3,7 @@ import {
     Container,
     Typography
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import ExchangeRateDisplay from "../components/ExchangeRateDisplay";
 import HistoryTable from "../components/HistoryTable";
 import {GLOBAL_CONF} from "../config/globalConf";
@@ -10,6 +11,7 @@ import Convertor, {ConversionResult} from "../components/Convertor";
 
 
 const ConvertorPage = () => {
+    const { t } = useTranslation();
     const [rate, setRate] = useState<number>(GLOBAL_CONF.INITIAL_RATE);
     const [realRate, setRealRate] = useState<number>(GLOBAL_CONF.INITIAL_RATE);
     const [history, setHistory] = useState<any[]>([]);
@@ -35,7 +37,7 @@ const ConvertorPage = () => {
 
     return (
         <Container maxWidth={'lg'} style={{ marginTop: '50px' }}>
-            <Typography variant="h4">Euro to Dollar Converter</Typography>
+            <Typography variant="h4">{t('pageTitle')}</Typography>
             <ExchangeRateDisplay rate={rate} onRateChange={setRate} onRealRateUpdate={setRealRate}  />
             <Convertor rate={rate} onConversion={hadleConversionDone} />
             <HistoryTable history={history} />
