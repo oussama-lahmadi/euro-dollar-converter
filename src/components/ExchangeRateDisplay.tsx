@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {Box, TextField, Typography} from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import {GLOBAL_CONF} from "../config/globalConf";
 import {isDeviationMoreThanLimit} from "../services/calculator";
 
 
 const ExchangeRateDisplay = ({rate, onRateChange, onRealRateUpdate}: {rate: number, onRealRateUpdate: (value: number) => void, onRateChange: (value: number) => void}) => {
+    const { t } = useTranslation();
     const [currentRate, setCurrentRate] = useState<number>(rate);
     const [fixedRate, setFixedRate] = useState<number | null>(null);
     const [fixedRateError, setFixedRateError] = useState<string>('');
@@ -13,7 +15,7 @@ const ExchangeRateDisplay = ({rate, onRateChange, onRealRateUpdate}: {rate: numb
     const isFixedRateAllowed = (): boolean => {
         if(fixedRate) {
             const isAllowed = !isDeviationMoreThanLimit(fixedRate, currentRate, GLOBAL_CONF.RESET_FIXED_RATE_LIMIT)
-            setFixedRateError(!isAllowed ? `Fixed rate disabled: ${GLOBAL_CONF.RESET_FIXED_RATE_LIMIT}% deviation exceeded` : '')
+            setFixedRateError(!isAllowed ? t('fixedRateDisabled', {limit: GLOBAL_CONF.RESET_FIXED_RATE_LIMIT}) : '')
             return isAllowed;
         }
         return false
@@ -58,10 +60,10 @@ const ExchangeRateDisplay = ({rate, onRateChange, onRealRateUpdate}: {rate: numb
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6" component="h2" style={{ marginTop: '20px', width: '50%' }}>
-                    Current rate: <span data-testid="exchange-rate">{currentRate.toFixed(2)}</span>
+                    {t('currentRate')} <span data-testid="exchange-rate">{currentRate.toFixed(2)}</span>
                 </Typography>
                 <TextField
-                    label="Set Fixed Exchange Rate"
+                    label={t('setFixedRate')}
                     variant="outlined"
                     value={fixedRate ?? ''}
                     onChange={handleFixedRateChange}
