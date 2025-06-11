@@ -10,10 +10,11 @@ import {SwapHoriz} from "@mui/icons-material";
 import {GLOBAL_CONF} from "../config/globalConf";
 import CurrencySelector from "./CurrencySelector";
 import {calculateAmount} from "../services/calculator";
-type Currency = 'EUR' | 'USD';
+type Currency = 'EUR' | 'USD' | 'DTN';
 
 interface ConvertorProps {
-    rate: number;
+    rates: { USD: number; DTN: number };
+    realUsdRate: number;
     onConversion: (value: ConversionResult) => void;
 }
 
@@ -22,9 +23,11 @@ export interface ConversionResult {
     value: number;
     fromCurrency: Currency;
     toCurrency: Currency;
+    rate: number;
+    realRate: number;
 }
 
-const Convertor = ({rate, onConversion }: ConvertorProps) => {
+const Convertor = ({rates, realUsdRate, onConversion }: ConvertorProps) => {
     const [amount, setAmount] = useState<number>(0);
     const [fromCurrency, setFromCurrency] = useState<Currency>(GLOBAL_CONF.CURRENCIES.EUR as Currency);
     const [toCurrency, setToCurrency] = useState< Currency>(GLOBAL_CONF.CURRENCIES.USD as Currency);
@@ -44,18 +47,43 @@ const Convertor = ({rate, onConversion }: ConvertorProps) => {
     useEffect(() => {
         updateResult(amount);
 
-    }, [rate, amount])
+    }, [rates, amount, fromCurrency, toCurrency])
+
+    const getRate = (from: Currency, to: Currency, useReal = false): number => {
+        const usdRate = useReal ? realUsdRate : rates.USD;
+        const dtnRate = rates.DTN;
+
+        if (from === to) return 1;
+        switch (from) {
+            case GLOBAL_CONF.CURRENCIES.EUR:
+                if (to === GLOBAL_CONF.CURRENCIES.USD) return usdRate;
+                if (to === GLOBAL_CONF.CURRENCIES.DTN) return dtnRate;
+                break;
+            case GLOBAL_CONF.CURRENCIES.USD:
+                if (to === GLOBAL_CONF.CURRENCIES.EUR) return 1 / usdRate;
+                if (to === GLOBAL_CONF.CURRENCIES.DTN) return (1 / usdRate) * dtnRate;
+                break;
+            case GLOBAL_CONF.CURRENCIES.DTN:
+                if (to === GLOBAL_CONF.CURRENCIES.EUR) return 1 / dtnRate;
+                if (to === GLOBAL_CONF.CURRENCIES.USD) return (1 / dtnRate) * usdRate;
+                break;
+        }
+        return 1;
+    };
 
     const updateResult = (value: number) => {
-        let operation: 'MULT' | 'DIV' = fromCurrency === GLOBAL_CONF.CURRENCIES.EUR ?  'MULT': 'DIV';
-        const result = calculateAmount(value, rate, operation);
+        const rate = getRate(fromCurrency, toCurrency);
+        const realRate = getRate(fromCurrency, toCurrency, true);
+        const result = calculateAmount(value, rate, 'MULT');
         setResultAmount(result);
         if(amount !== 0) {
             onConversion({
                 amount: amount,
                 value: result,
                 fromCurrency: fromCurrency,
-                toCurrency: toCurrency
+                toCurrency: toCurrency,
+                rate: rate,
+                realRate: realRate
             });
         }
 
@@ -74,7 +102,7 @@ const Convertor = ({rate, onConversion }: ConvertorProps) => {
                 />
             </FormControl>
 
-            <CurrencySelector currency={fromCurrency} label={'From'} />
+            <CurrencySelector currency={fromCurrency} label={'From'} onChange={setFromCurrency} />
             <IconButton color="primary" sx={{ m: 1 }} onClick={handleSwapCurrencies}>
                 <SwapHoriz />
             </IconButton>
@@ -90,7 +118,7 @@ const Convertor = ({rate, onConversion }: ConvertorProps) => {
                 />
             </FormControl>
 
-            <CurrencySelector currency={toCurrency} label={'To'} />
+            <CurrencySelector currency={toCurrency} label={'To'} onChange={setToCurrency} />
 
         </Box>
     );

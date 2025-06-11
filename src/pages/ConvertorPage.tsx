@@ -12,6 +12,7 @@ import Convertor, {ConversionResult} from "../components/Convertor";
 const ConvertorPage = () => {
     const [rate, setRate] = useState<number>(GLOBAL_CONF.INITIAL_RATE);
     const [realRate, setRealRate] = useState<number>(GLOBAL_CONF.INITIAL_RATE);
+    const dtnRate = GLOBAL_CONF.INITIAL_DTN_RATE;
     const [history, setHistory] = useState<any[]>([]);
 
 
@@ -20,8 +21,8 @@ const ConvertorPage = () => {
             {
                 from: conversion.fromCurrency,
                 to: conversion.toCurrency,
-                rate: rate.toFixed(2),
-                realRate: realRate.toFixed(2),
+                rate: conversion.rate.toFixed(2),
+                realRate: conversion.realRate.toFixed(2),
                 amount: conversion.amount.toFixed(2),
                 result: conversion.value.toFixed(2)
             },
@@ -37,7 +38,7 @@ const ConvertorPage = () => {
         <Container maxWidth={'lg'} style={{ marginTop: '50px' }}>
             <Typography variant="h4">Euro to Dollar Converter</Typography>
             <ExchangeRateDisplay rate={rate} onRateChange={setRate} onRealRateUpdate={setRealRate}  />
-            <Convertor rate={rate} onConversion={hadleConversionDone} />
+            <Convertor rates={{USD: rate, DTN: dtnRate}} realUsdRate={realRate} onConversion={hadleConversionDone} />
             <HistoryTable history={history} />
         </Container>
     );
